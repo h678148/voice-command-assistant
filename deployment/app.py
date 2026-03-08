@@ -10,33 +10,127 @@ import random
 
 
 dark_css = """
-body {
-    background-color: #0f172a;
+:root {
+    --bg: #0b1220;
+    --panel: #111827;
+    --panel-2: #0f172a;
+    --border: #334155;
+    --text: #e5e7eb;
+    --muted: #94a3b8;
+    --accent: #2563eb;
+    --accent-2: #1d4ed8;
 }
 
+html, body, .gradio-container {
+    background: var(--bg) !important;
+    color: var(--text) !important;
+}
+
+/* Main app wrapper */
 .gradio-container {
-    background-color: #0f172a;
+    max-width: 1400px !important;
 }
 
-h1, h2, h3, h4, p, label {
-    color: #e5e7eb !important;
+/* Headings and normal text */
+h1, h2, h3, h4, h5, h6, p, span, label, .prose, .prose * {
+    color: var(--text) !important;
 }
 
+/* Tabs */
+button[role="tab"] {
+    background: var(--panel) !important;
+    color: var(--text) !important;
+    border: 1px solid var(--border) !important;
+    border-bottom: none !important;
+    border-radius: 10px 10px 0 0 !important;
+    margin-right: 6px !important;
+}
+
+button[role="tab"][aria-selected="true"] {
+    background: var(--panel-2) !important;
+    color: white !important;
+    border-color: var(--accent) !important;
+}
+
+/* Generic blocks / cards / groups */
+.block, .panel, .wrap, .gr-box, .gr-panel, .gr-group, .gr-form {
+    background: var(--panel) !important;
+    color: var(--text) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 12px !important;
+}
+
+/* Inputs / outputs */
+input, textarea, select {
+    background: var(--panel-2) !important;
+    color: var(--text) !important;
+    border: 1px solid var(--border) !important;
+}
+
+input::placeholder, textarea::placeholder {
+    color: var(--muted) !important;
+}
+
+/* Number/text/json output boxes */
+[data-testid="textbox"],
+[data-testid="number"],
+[data-testid="json"],
+[data-testid="label"],
+[data-testid="image"] {
+    background: var(--panel) !important;
+    color: var(--text) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 12px !important;
+}
+
+/* Audio component */
+audio {
+    background: var(--panel-2) !important;
+    border-radius: 10px !important;
+}
+
+/* Buttons */
 button {
-    background-color: #1f2937 !important;
-    color: white !important;
-    border: 1px solid #374151 !important;
+    border-radius: 10px !important;
 }
 
-textarea, input {
-    background-color: #111827 !important;
+button.primary, .gr-button-primary {
+    background: var(--accent) !important;
     color: white !important;
-    border: 1px solid #374151 !important;
+    border: 1px solid var(--accent) !important;
 }
 
-.tab-nav button {
-    background-color: #1f2937 !important;
-    color: white !important;
+button.primary:hover, .gr-button-primary:hover {
+    background: var(--accent-2) !important;
+}
+
+button.secondary, .gr-button-secondary {
+    background: var(--panel-2) !important;
+    color: var(--text) !important;
+    border: 1px solid var(--border) !important;
+}
+
+/* Labels above components */
+label, .gr-block-label {
+    color: var(--muted) !important;
+    font-weight: 600 !important;
+}
+
+/* Markdown spacing */
+.prose {
+    max-width: 100% !important;
+}
+
+/* Tables / code / json */
+pre, code {
+    background: var(--panel-2) !important;
+    color: var(--text) !important;
+    border-radius: 8px !important;
+}
+
+/* Slightly nicer spacing */
+.gradio-container .gap {
+    gap: 12px !important;
 }
 """
 
