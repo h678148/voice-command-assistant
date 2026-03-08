@@ -44,15 +44,15 @@ The final system uses a **Convolutional Neural Network trained on the Google Spe
 ---
 
 ## Repository Structure
-voice-command-assistant/
-│
-├── notebooks/        # Development notebooks (ML lifecycle)
-├── models/           # Trained model checkpoints
-├── results/          # Metrics, figures, experiment outputs
-├── reports/          # Project report
-├── deployment/       # Files used for the web application
-└── data/             # Data structure (dataset not included due to size)
-
+```
+📦 voice-command-assistant
+├─ notebooks/       # Development notebooks (ML lifecycle)
+├─ models/          # Trained model checkpoints
+├─ results/         # Metrics, figures, experiment outputs
+├─ report/          # Project report
+├─ deployment/      # Files used for the web application
+└─ data/            # Data structure (dataset not included due to size)
+```
 
 ---
 
