@@ -1,19 +1,75 @@
-# Voice command assistant (DAT255)
+# Voice Command Assistant
 
-A low-latency voice command recognition system trained on the Google Speech Commands dataset.
+A deep learning project for **voice command recognition** and **interactive control**, developed as part of the **DAT255 – Deep Learning Engineering** course.
 
-## Project goals
-- Train at least one deep learning model from scratch to recognize a small set of commands (e.g., up/down/left/right).
-- Compare architectures and preprocessing strategies.
-- Evaluate on unseen data with clear metrics and error analysis.
-- (Optional) Deploy as a small web app and/or use microphone input to control a simple game (Snake).
+The system recognizes simple spoken commands (*up, down, left, right*) and demonstrates real-time inference by controlling a **Snake game with voice commands**.
+
+---
+
+## Deployed application
+
+Try the application here:
+
+**https://bilals04-voice-command-assistant.hf.space**
+
+Includes:
+
+- Voice command classifier
+- Snake game with manual controls
+- Snake game controlled by voice commands
+
+---
+
+## YouTube Demo  
+
+A short demonstration of the application:
+
+*(Link will be added)*
+
+---
+
+## Project Overview
+
+This project follows a standard **machine learning lifecycle**:
+
+1. Data ingestion and verification  
+2. Exploratory data analysis and preprocessing  
+3. Model training (CNN trained from scratch)  
+4. Model evaluation and error analysis  
+5. Experimentation and model improvements  
+6. Deployment as an interactive web application  
+
+The final system uses a **Convolutional Neural Network trained on the Google Speech Commands dataset**.
+
+---
+
+## Repository Structure
+voice-command-assistant/
+│
+├── notebooks/        # Development notebooks (ML lifecycle)
+├── models/           # Trained model checkpoints
+├── results/          # Metrics, figures, experiment outputs
+├── reports/          # Project report
+├── deployment/       # Files used for the web application
+└── data/             # Data structure (dataset not included due to size)
+
+
+---
+
+## Technologies Used
+
+- Python  
+- PyTorch  
+- Librosa  
+- Gradio  
+- Hugging Face Spaces  
+- Google Colab  
+
+---
 
 ## Dataset
-Google Speech Commands (Hugging Face):
+
+The project uses the **Google Speech Commands Dataset**:
+
 https://huggingface.co/datasets/google/speech_commands
 
-## Repo structure
-- `notebooks/`: End-to-end ML lifecycle
-- `src/`: Reusable code for data, models, training and evaluation
-- `app/`: Gradio/Streamlit demo apps
-- `reports/`: Report and figures

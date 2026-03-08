@@ -1,3 +1,14 @@
+---
+title: Voice Command Assistant
+emoji: 🎙️
+colorFrom: blue
+colorTo: indigo
+sdk: gradio
+app_file: app.py
+pinned: false
+short_description: Voice command classifier and voice-controlled Snake demo
+---
+
 # Voice Command Assistant
 
 This is a small speech command recognizer trained from scratch on the Google Speech Commands dataset.
