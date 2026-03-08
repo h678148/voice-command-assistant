@@ -8,6 +8,39 @@ import gradio as gr
 import matplotlib.pyplot as plt
 import random
 
+
+dark_css = """
+body {
+    background-color: #0f172a;
+}
+
+.gradio-container {
+    background-color: #0f172a;
+}
+
+h1, h2, h3, h4, p, label {
+    color: #e5e7eb !important;
+}
+
+button {
+    background-color: #1f2937 !important;
+    color: white !important;
+    border: 1px solid #374151 !important;
+}
+
+textarea, input {
+    background-color: #111827 !important;
+    color: white !important;
+    border: 1px solid #374151 !important;
+}
+
+.tab-nav button {
+    background-color: #1f2937 !important;
+    color: white !important;
+}
+"""
+
+
 PROJECT_ROOT = Path(__file__).resolve().parent
 MODEL_PATH = PROJECT_ROOT / "cnn_5class_E2_downsample_aug_1772993374_best.pt"
 
@@ -243,7 +276,7 @@ def voice_step_threshold(state, audio_input):
     return state, render_board(state), state["score"], state["alive"], state["direction"], info
 
 
-with gr.Blocks() as demo:
+with gr.Blocks(css=dark_css) as demo:
     gr.Markdown("# 🎙️ Voice Command Assistant + 🐍 Snake Demo")
     gr.Markdown(
         "Tabs: 5-class classifier, manual Snake, and voice-controlled Snake. "
