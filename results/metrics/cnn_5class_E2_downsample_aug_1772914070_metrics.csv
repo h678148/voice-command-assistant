@@ -1,0 +1,2 @@
+run_name,best_val_acc,best_epoch,val_acc,val_macro_f1,test_acc,test_macro_f1
+cnn_5class_E2_downsample_aug_1772914070,0.8540372670807453,6,0.8540372670807453,0.6563901465143859,0.7838445807770961,0.706706365716285

@@ -1,0 +1,10 @@
+gradio
+torch
+torchaudio
+librosa
+numpy
+pandas
+matplotlib
+datasets
+pillow
+seaborn

@@ -1,0 +1,3 @@
+model,input,params,test_acc,test_macro_f1,gpu_latency_ms,cpu_latency_ms
+Spectrogram CNN (best E2),Mel-spectrogram,23845,0.784,0.707,0.559,1.203
+Raw Waveform Conv1D,Raw waveform,9621,0.7092024539877301,0.4519248372959945,0.6292043099983857,0.8361432849960693

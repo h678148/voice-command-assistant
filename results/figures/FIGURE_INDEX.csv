@@ -1,0 +1,14 @@
+figure_file,path
+aug_melspectrogram_example_0603.png,/content/drive/MyDrive/DAT255/voice-command-assistant/results/figures/aug_melspectrogram_example_0603.png
+aug_waveform_original_vs_aug_0603.png,/content/drive/MyDrive/DAT255/voice-command-assistant/results/figures/aug_waveform_original_vs_aug_0603.png
+cnn_4class_baseline_1772452765_cm_test_0303.png,/content/drive/MyDrive/DAT255/voice-command-assistant/results/figures/cnn_4class_baseline_1772452765_cm_test_0303.png
+cnn_4class_baseline_1772452765_cm_val_0303.png,/content/drive/MyDrive/DAT255/voice-command-assistant/results/figures/cnn_4class_baseline_1772452765_cm_val_0303.png
+cnn_5class_weighted_1772453499_cm_test_0305.png,/content/drive/MyDrive/DAT255/voice-command-assistant/results/figures/cnn_5class_weighted_1772453499_cm_test_0305.png
+cnn_5class_weighted_1772453499_cm_val_0305.png,/content/drive/MyDrive/DAT255/voice-command-assistant/results/figures/cnn_5class_weighted_1772453499_cm_val_0305.png
+confusion_matrix_5class_E1_0602.png,/content/drive/MyDrive/DAT255/voice-command-assistant/results/figures/confusion_matrix_5class_E1_0602.png
+confusion_matrix_5class_E2_downsample_aug_0604.png,/content/drive/MyDrive/DAT255/voice-command-assistant/results/figures/confusion_matrix_5class_E2_downsample_aug_0604.png
+confusion_matrix_raw_waveform_conv1d_0703.png,/content/drive/MyDrive/DAT255/voice-command-assistant/results/figures/confusion_matrix_raw_waveform_conv1d_0703.png
+label_distribution_train_0104.png,/content/drive/MyDrive/DAT255/voice-command-assistant/results/figures/label_distribution_train_0104.png
+mel_spectrogram_example_0202.png,/content/drive/MyDrive/DAT255/voice-command-assistant/results/figures/mel_spectrogram_example_0202.png
+train_dist_5class_unknown_downsample_12000_0601.png,/content/drive/MyDrive/DAT255/voice-command-assistant/results/figures/train_dist_5class_unknown_downsample_12000_0601.png
+waveform_example_0202.png,/content/drive/MyDrive/DAT255/voice-command-assistant/results/figures/waveform_example_0202.png

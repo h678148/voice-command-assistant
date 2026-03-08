@@ -1,0 +1,18 @@
+# Voice Command Assistant dependencies
+# DAT255 Deep Learning Engineering project
+
+torch
+torchaudio
+numpy
+pandas
+matplotlib
+seaborn
+scikit-learn
+librosa
+soundfile
+datasets
+tqdm
+jupyter
+gradio
+streamlit
+pillow

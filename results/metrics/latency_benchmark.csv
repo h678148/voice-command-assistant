@@ -1,0 +1,5 @@
+run_name,model,device,latency_ms_per_sample
+cnn_4class_baseline_1772452765,4-class,GPU,0.5533590150025702
+cnn_5class_weighted_1772453499,5-class,GPU,0.5588688500029093
+cnn_4class_baseline_1772452765,4-class,CPU,1.230130329995518
+cnn_5class_weighted_1772453499,5-class,CPU,1.2028046149953298
