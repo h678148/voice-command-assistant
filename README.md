@@ -17,6 +17,7 @@ Includes:
 - Voice command classifier
 - Snake game with manual controls
 - Snake game controlled by voice commands
+- Live voice controlled snake game 
 
 ---
 
