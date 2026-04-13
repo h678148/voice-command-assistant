@@ -5,8 +5,14 @@ import torch
 import torch.nn as nn
 import librosa
 import gradio as gr
-import matplotlib.pyplot as plt
 import random
+from PIL import Image, ImageDraw, ImageFont
+
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+
+from snake_game import SnakeGame
 
 
 dark_css = """
@@ -147,6 +153,8 @@ N_FFT = 400
 CLASS_NAMES = ["up", "down", "left", "right", "unknown"]
 SNAKE_COMMANDS = {"up", "down", "left", "right"}
 CONF_THRESH = 0.55
+ENERGY_THRESHOLD = 0.03
+TICK_INTERVAL = 0.5
 
 class SmallSpectrogramCNN(nn.Module):
     def __init__(self, n_classes=5):
@@ -370,10 +378,97 @@ def voice_step_threshold(state, audio_input):
     return state, render_board(state), state["score"], state["alive"], state["direction"], info
 
 
+LIVE_COMMANDS = {"left", "right"}
+
+@torch.no_grad()
+def _predict_label(sr: int, audio: np.ndarray) -> str:
+    mel = audio_to_mel_db(audio, sr)
+    x = torch.from_numpy(mel).unsqueeze(0).unsqueeze(0).float().to(device)
+    logits = model(x)
+    probs = torch.softmax(logits, dim=1).cpu().numpy().squeeze()
+
+    pred_idx = int(np.argmax(probs))
+    confidence = float(probs[pred_idx])
+
+    if confidence < CONF_THRESH:
+        return "unknown"
+    return CLASS_NAMES[pred_idx]
+
+
+def _init_live_state():
+    return {"game": SnakeGame(), "buffer": []}
+
+
+def _process_chunk(chunk, state):
+    """Buffer ~1 s of streaming audio, classify, and apply turn to SnakeGame."""
+    buf: list = state["buffer"]
+
+    if chunk is None:
+        return "Listening ...", state
+
+    sr, data = chunk
+
+    if np.issubdtype(data.dtype, np.integer):
+        data = data.astype(np.float32) / np.iinfo(data.dtype).max
+    elif data.dtype != np.float32:
+        data = data.astype(np.float32)
+    if data.ndim > 1:
+        data = data.mean(axis=1)
+
+    buf.append(data)
+    total = sum(len(b) for b in buf)
+
+    if total < sr:
+        return "Listening ...", state
+
+    full = np.concatenate(buf)
+    buf.clear()
+
+    rms = float(np.sqrt(np.mean(full**2)))
+    if rms < ENERGY_THRESHOLD:
+        return f"Silence (RMS {rms:.4f})", state
+
+    command = _predict_label(sr, full)
+    if command in LIVE_COMMANDS:
+        state["game"].turn(command)
+        return f"Command: {command}", state
+
+    return f"Ignored: {command}", state
+
+
+def _live_tick(state):
+    game: SnakeGame = state["game"]
+
+    if game.game_over:
+        return game.render(), f"GAME OVER | Score: {game.score}", state, gr.Timer(active=False)
+
+    status = game.step()
+    img = game.render()
+
+    info = f"Score: {status['score']} | Direction: {status['direction']}"
+    if status["game_over"]:
+        info += " | GAME OVER"
+        return img, info, state, gr.Timer(active=False)
+
+    return img, info, state, gr.Timer(active=True)
+
+
+def _start_live_game(state):
+    state["game"].reset()
+    state["buffer"].clear()
+    return state["game"].render(), "Game started! Say 'left' or 'right'.", state, gr.Timer(active=True)
+
+
+def _reset_live_game(state):
+    state["game"].reset()
+    state["buffer"].clear()
+    return state["game"].render(), "Reset. Press Start to play.", state, gr.Timer(active=False)
+
+
 with gr.Blocks(css=dark_css) as demo:
-    gr.Markdown("# 🎙️ Voice Command Assistant + 🐍 Snake Demo")
+    gr.Markdown("# Voice Command Assistant + Snake Demo")
     gr.Markdown(
-        "Tabs: 5-class classifier, manual Snake, and voice-controlled Snake. "
+        "Tabs: 5-class classifier, manual Snake, voice-controlled Snake, and live voice Snake. "
         f"Snake uses confidence threshold = **{CONF_THRESH}** and treats **unknown** as no-op."
     )
 
@@ -451,6 +546,51 @@ with gr.Blocks(css=dark_css) as demo:
             )
 
             gr.Markdown("Click **Reset** before using **Speak & Move**.")
+
+        with gr.Tab("Snake (live voice)"):
+            gr.Markdown(
+                "Say **left** or **right** into the microphone to turn the snake. "
+                "The snake moves forward automatically at a constant speed."
+            )
+
+            live_state = gr.State(_init_live_state())
+            live_timer = gr.Timer(value=TICK_INTERVAL, active=False)
+
+            with gr.Row():
+                live_audio = gr.Audio(
+                    sources=["microphone"], streaming=True, type="numpy",
+                    label="Microphone (click to start)",
+                )
+
+            with gr.Row():
+                live_start_btn = gr.Button("Start", variant="primary")
+                live_reset_btn = gr.Button("Reset")
+
+            _initial_live = SnakeGame()
+            live_board = gr.Image(label="Game board", value=_initial_live.render())
+            live_cmd = gr.Textbox(label="Last command", interactive=False)
+            live_status = gr.Textbox(label="Game status", value="Press Start to play!", interactive=False)
+
+            live_audio.stream(
+                fn=_process_chunk,
+                inputs=[live_audio, live_state],
+                outputs=[live_cmd, live_state],
+            )
+            live_timer.tick(
+                fn=_live_tick,
+                inputs=[live_state],
+                outputs=[live_board, live_status, live_state, live_timer],
+            )
+            live_start_btn.click(
+                fn=_start_live_game,
+                inputs=[live_state],
+                outputs=[live_board, live_status, live_state, live_timer],
+            )
+            live_reset_btn.click(
+                fn=_reset_live_game,
+                inputs=[live_state],
+                outputs=[live_board, live_status, live_state, live_timer],
+            )
 
 if __name__ == "__main__":
     demo.launch()

@@ -30,4 +30,3 @@ The deployed model is a spectrogram-based CNN trained from scratch in PyTorch.
 
 ## Project context
 This project was developed for DAT255 Deep Learning Engineering.
-

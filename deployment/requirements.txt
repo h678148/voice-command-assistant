@@ -1,10 +1,11 @@
-gradio
 torch
-torchaudio
-librosa
 numpy
 pandas
 matplotlib
-datasets
+scikit-learn
+librosa
+soundfile
+tqdm
+jupyter
+gradio
 pillow
-seaborn
